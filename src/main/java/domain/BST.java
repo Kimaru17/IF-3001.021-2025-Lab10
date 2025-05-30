@@ -248,4 +248,7 @@ public class BST implements  Tree {
         return result;
     }
 
+    public BTreeNode getRoot() {
+        return root;
+    }
 }

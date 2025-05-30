@@ -315,6 +315,9 @@ public class AVL implements  Tree {
                 && isBalanced(node.right);
     }
 
+    public BTreeNode getRoot () {
+        return root;
+    }
     public Object father(Object element) throws TreeException {
         if (isEmpty())
             throw new TreeException("AVL Binary Search Tree is empty");
