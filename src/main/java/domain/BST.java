@@ -219,6 +219,21 @@ public class BST implements  Tree {
         return result;
     }
 
+    public boolean isBalanced() throws TreeException {
+        if (isEmpty()) {
+            throw new TreeException("Binary Search Tree is empty.");
+        }
+        return isBalanced(root);
+    }
+
+    private boolean isBalanced(BTreeNode node) {
+        if (node == null) return true;
+
+        return Math.abs(height(node.left) - height(node.right)) <= 1
+                && isBalanced(node.left)
+                && isBalanced(node.right);
+    }
+
     @Override
     public String toString() {
         String result="Binary Search Tree Content:";
