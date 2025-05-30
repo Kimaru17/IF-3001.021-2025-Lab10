@@ -60,35 +60,32 @@ public class AVL implements  Tree {
             node.right = add(node.right, element, path+"/right");
 
         //una vez agregado el nuevo nodo, debemos determinar si se requiere rebalanceo para siga siendo BST-AVL
-        node = reBalance(node, element);
+        node = reBalance(node);
         return node;
     }
 
-    private BTreeNode reBalance(BTreeNode node, Object element) {
-        //debemos obtener el factor de balanceo, si es 0, -1, 1 está balanceado, si es <=-2, >=2 hay que rebalancear
+    private BTreeNode reBalance(BTreeNode node) {
+        if (node == null) return null;
         int balance = getBalanceFactor(node);
 
-        // Caso-1. Left Left Case
-        if (balance > 1 && util.Utility.compare(element, node.left.data)<0){
+        // Caso 1: Desequilibrio izquierda-izquierda
+        if (balance > 1 && getBalanceFactor(node.left) >= 0) {
             node.path += "/Simple-Right-Rotate";
             return rightRotate(node);
         }
-
-        // Caso-2. Right Right Case
-        if (balance < -1 && util.Utility.compare(element, node.right.data)>0){
-            node.path += "/Simple-Left-Rotate";
-            return leftRotate(node);
-        }
-
-        // Caso-3. Left Right Case
-        if (balance > 1 && util.Utility.compare(element, node.left.data)>0) {
+        // Caso 2: Desequilibrio izquierda-derecha
+        if (balance > 1 && getBalanceFactor(node.left) < 0) {
             node.path += "/Double-Left-Right-Rotate";
             node.left = leftRotate(node.left);
             return rightRotate(node);
         }
-
-        // Caso-4. Right Left Case
-        if (balance < -1 && util.Utility.compare(element, node.right.data)<0) {
+        // Caso 3: Desequilibrio derecha-derecha
+        if (balance < -1 && getBalanceFactor(node.right) <= 0) {
+            node.path += "/Simple-Left-Rotate";
+            return leftRotate(node);
+        }
+        // Caso 4: Desequilibrio derecha-izquierda
+        if (balance < -1 && getBalanceFactor(node.right) > 0) {
             node.path += "/Double-Right-Left-Rotate";
             node.right = rightRotate(node.right);
             return leftRotate(node);
@@ -129,43 +126,30 @@ public class AVL implements  Tree {
 
     @Override
     public void remove(Object element) throws TreeException {
-        if(isEmpty())
+        if (isEmpty())
             throw new TreeException("AVL Binary Search Tree is empty");
         root = remove(root, element);
     }
 
-    private BTreeNode remove(BTreeNode node, Object element) throws TreeException{
-        if(node!=null){
-            if(util.Utility.compare(element, node.data)<0)
-              node.left = remove(node.left, element);
-            else if(util.Utility.compare(element, node.data)>0)
-                node.right = remove(node.right, element);
-            else if(util.Utility.compare(node.data, element)==0){
-                //caso 1. es un nodo si hijos, es una hoja
-                if(node.left==null && node.right==null) return null;
-                //caso 2-a. el nodo solo tien un hijo, el hijo izq
-                else if (node.left!=null&&node.right==null) {
-                    return node.left;
-                } //caso 2-b. el nodo solo tien un hijo, el hijo der
-                else if (node.left==null&&node.right!=null) {
-                    return node.right;
-                }
-                //caso 3. el nodo tiene dos hijos
-                else{
-                //else if (node.left!=null&&node.right!=null) {
-                    /* *
-                     * El algoritmo de supresión dice que cuando el nodo a suprimir
-                     * tiene 2 hijos, entonces busque una hoja del subarbol derecho
-                     * y sustituya la data del nodo a suprimir por la data de esa hoja,
-                     * luego elimine esa hojo
-                     * */
-                    Object value = min(node.right);
-                    node.data = value;
-                    node.right = remove(node.right, value);
-                }
+    private BTreeNode remove(BTreeNode node, Object element) throws TreeException {
+        if (node == null) return null;
+
+        if (util.Utility.compare(element, node.data) < 0) {
+            node.left = remove(node.left, element);
+        } else if (util.Utility.compare(element, node.data) > 0) {
+            node.right = remove(node.right, element);
+        } else {
+            // Casos de eliminación
+            if (node.left == null && node.right == null) return null;
+            else if (node.left != null && node.right == null) return node.left;
+            else if (node.left == null && node.right != null) return node.right;
+            else {
+                Object value = min(node.right);
+                node.data = value;
+                node.right = remove(node.right, value);
             }
         }
-        return node; //retorna el nodo modificado o no
+        return reBalance(node); // Reequilibra después de eliminar
     }
 
     @Override
@@ -310,6 +294,119 @@ public class AVL implements  Tree {
             throw new RuntimeException(e);
         }
         return result;
+    }
+
+    public boolean isBalanced() throws TreeException {
+        if (isEmpty()) {
+            throw new TreeException("AVL Binary Search Tree is empty.");
+        }
+        return isBalanced(root);
+    }
+
+    private boolean isBalanced(BTreeNode node) {
+        if (node == null) {
+            return true;
+        }
+        int leftHeight = height(node.left);
+        int rightHeight = height(node.right);
+
+        return Math.abs(leftHeight - rightHeight) <= 1
+                && isBalanced(node.left)
+                && isBalanced(node.right);
+    }
+
+    public Object father(Object element) throws TreeException {
+        if (isEmpty())
+            throw new TreeException("AVL Binary Search Tree is empty");
+        // Si es la raíz, no tiene padre
+        if (util.Utility.compare(root.data, element) == 0)
+            return null;
+        return father(root, element, null);
+    }
+
+    private Object father(BTreeNode node, Object element, BTreeNode parent) {
+        if (node == null) {
+            // elemento no encontrado
+            return null;
+        }
+        int cmp = util.Utility.compare(element, node.data);
+        if (cmp == 0) {
+            return (parent != null) ? parent.data : null;
+        } else if (cmp < 0) {
+            return father(node.left, element, node);
+        } else {
+            return father(node.right, element, node);
+        }
+    }
+
+
+// ----------------- BROTHER -----------------
+
+    /**
+     * Devuelve el hermano (sibling) del elemento dado en el árbol.
+     * @throws TreeException si el árbol está vacío
+     * @return dato del hermano, o null si raíz, sin hermano, o elemento no existe
+     */
+    public Object brother(Object element) throws TreeException {
+        if (isEmpty())
+            throw new TreeException("AVL Binary Search Tree is empty");
+        return brother(root, element, null);
+    }
+
+    private Object brother(BTreeNode node, Object element, BTreeNode parent) {
+        if (node == null) {
+            // elemento no encontrado
+            return null;
+        }
+        int cmp = util.Utility.compare(element, node.data);
+        if (cmp == 0) {
+            if (parent == null) return null;      // es la raíz
+            // si node es left de parent, devolvemos right, y viceversa
+            if (parent.left == node) {
+                return (parent.right != null) ? parent.right.data : null;
+            } else {
+                return (parent.left != null) ? parent.left.data : null;
+            }
+        } else if (cmp < 0) {
+            return brother(node.left, element, node);
+        } else {
+            return brother(node.right, element, node);
+        }
+    }
+
+
+// ----------------- CHILDREN -----------------
+
+    /**
+     * Devuelve los hijos del elemento dado en el árbol.
+     * @throws TreeException si el árbol está vacío
+     * @return cadena con datos de los hijos, o "" si no tiene o no existe
+     */
+    public String children(Object element) throws TreeException {
+        if (isEmpty())
+            throw new TreeException("AVL Binary Search Tree is empty");
+        return children(root, element);
+    }
+
+    private String children(BTreeNode node, Object element) {
+        if (node == null) {
+            // elemento no encontrado
+            return "";
+        }
+        int cmp = util.Utility.compare(element, node.data);
+        if (cmp < 0) {
+            return children(node.left, element);
+        } else if (cmp > 0) {
+            return children(node.right, element);
+        } else {
+            String result = "";
+            if (node.left != null)  result = node.left.data.toString();
+            if (node.right != null) {
+                if (!result.isEmpty()) result += " ";
+                result += node.right.data.toString();
+            }
+            return result;
+        }
     }
 
 }
