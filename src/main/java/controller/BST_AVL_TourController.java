@@ -80,7 +80,7 @@ public class BST_AVL_TourController {
             avl.clear();
             // Generar el árbol con valores aleatorios
             for (int i = 0; i < 10; i++)
-                avl.add(util.Utility.random(99));
+                avl.add(util.Utility.random(50));
 
 
             if (buttonAVL.isSelected())
@@ -97,7 +97,7 @@ public class BST_AVL_TourController {
             bst.clear();
             // Generar el árbol con valores aleatorios
             for (int i = 0; i < 10; i++)
-                bst.add(util.Utility.random(99));
+                bst.add(util.Utility.random(50));
 
 
             if (buttonAVL.isSelected())
@@ -241,7 +241,7 @@ public class BST_AVL_TourController {
         avl.clear();
         pane.getChildren().add(nameTag);
         for (int i = 0; i < 10; i++)
-            avl.add(util.Utility.random(99));
+            avl.add(util.Utility.random(50));
         BTreeNode root = avl.getRoot();
         drawTree(pane, root, x, y, hgap);
         checkBalance(); // Se verifica si el árbol está balanceado o no para cambiar el texto 'balanced' acordemente.
@@ -256,7 +256,7 @@ public class BST_AVL_TourController {
         pane.getChildren().add(nameTag);
 
         for (int i = 0; i < 10; i++)
-            bst.add(util.Utility.random(99));
+            bst.add(util.Utility.random(50));
         BTreeNode root = bst.getRoot();
         drawTree(pane, root, x, y, hgap);
         checkBalance();  // Se verifica si el árbol está balanceado o no para cambiar el texto 'balanced' acordemente.

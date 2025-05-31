@@ -54,9 +54,4 @@ public class HelloController {
     public void bTreeOperationsOnAction(ActionEvent actionEvent) {
         loadPage("BST-AVL-Operations.fxml");
     }
-
-    @FXML
-    public void practiceOnAction(ActionEvent actionEvent) {
-        loadPage("practice.fxml");
-    }
 }

@@ -29,16 +29,19 @@ public class FXUtility {
         String css = HelloApplication.class.getResource("dialog.css").toExternalForm();
         dialogPane.getStylesheets().add(css);
         dialogPane.getStyleClass().add("myDialog");
+        myalert.showAndWait();
         return myalert;
     }
 
-    public static TextInputDialog dialog(String title, String headerText){
+    public static String dialog(String title, String headerText){
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle(title);
         dialog.setHeaderText(headerText);
-        //String css = HelloApplication.class.getResource("moderna.css").toExternalForm();
-        //dialog.getEditor().getStylesheets().add(css);
-        return dialog;
+        String css = HelloApplication.class.getResource("dialog.css").toExternalForm();
+        dialog.getEditor().getStylesheets().add(css);
+
+        Optional<String> result = dialog.showAndWait();
+        return result.orElse(""); // Retorna el valor ingresado, o una cadena vacía si el diálogo fue cancelado.
     }
 
     public static String alertYesNo(String title, String headerText, String contextText){

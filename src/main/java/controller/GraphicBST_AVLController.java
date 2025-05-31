@@ -24,7 +24,7 @@ public class GraphicBST_AVLController {
     private Text balanced;
     AVL avl = new AVL();
     BST bst = new BST();
-    int x = 531, y = 83, hgap = 225;
+    int x = 408, y = 59, hgap = 150;
 
     BTree tree = new BTree();
     Line levelLine = null;
@@ -82,14 +82,14 @@ public class GraphicBST_AVLController {
             pane.getChildren().clear();
             avl.clear();
             for (int i = 0; i <= 20; i++)
-                avl.add(util.Utility.random(99));
+                avl.add(util.Utility.random(50));
             BTreeNode root = avl.getRoot();
             drawTree(pane, root, x, y, hgap);
         }else if (buttonBST.isSelected()) { // Caso donde el árbol BST esté seleccionado.
             pane.getChildren().clear();
             bst.clear();
             for (int i = 0; i <= 20; i++)
-                bst.add(util.Utility.random(99));
+                bst.add(util.Utility.random(50));
             BTreeNode root = bst.getRoot();
             drawTree(pane, root, x, y, hgap);
         }// End of 'if'.
@@ -103,7 +103,7 @@ public class GraphicBST_AVLController {
         pane.getChildren().clear();
         avl.clear();
         for (int i = 0; i <= 20; i++)
-            avl.add(util.Utility.random(99));
+            avl.add(util.Utility.random(50));
         BTreeNode root = avl.getRoot();
         drawTree(pane, root, x, y, hgap);
         checkBalance(); // Se verifica si el árbol está balanceado o no para cambiar el texto 'balanced' acordemente.
@@ -116,7 +116,7 @@ public class GraphicBST_AVLController {
         pane.getChildren().clear();
         bst.clear();
         for (int i = 0; i <= 20; i++)
-            bst.add(util.Utility.random(99));
+            bst.add(util.Utility.random(50));
         BTreeNode root = bst.getRoot();
         drawTree(pane, root, x, y, hgap);
         checkBalance();  // Se verifica si el árbol está balanceado o no para cambiar el texto 'balanced' acordemente.
@@ -168,7 +168,6 @@ public class GraphicBST_AVLController {
             e.printStackTrace();
         }
     }
-
 
     @FXML
     public void balancedOnAction(ActionEvent actionEvent) throws TreeException {

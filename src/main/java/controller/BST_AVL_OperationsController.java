@@ -76,14 +76,14 @@ public class BST_AVL_OperationsController {
             pane.getChildren().clear();
             avl.clear();
             for (int i = 0; i <= 20; i++)
-                avl.add(util.Utility.random(99));
+                avl.add(util.Utility.random(50));
             BTreeNode root = avl.getRoot();
             drawTree(pane, root, x, y, hgap, "root");
         }else if (buttonBST.isSelected()) { // Caso donde el árbol BST esté seleccionado.
             pane.getChildren().clear();
             bst.clear();
             for (int i = 0; i <= 20; i++)
-                bst.add(util.Utility.random(99));
+                bst.add(util.Utility.random(50));
             BTreeNode root = bst.getRoot();
             drawTree(pane, root, x, y, hgap, "root");
         }// End of 'if'.
@@ -247,7 +247,7 @@ public class BST_AVL_OperationsController {
         pane.getChildren().clear();
         avl.clear();
         for (int i = 0; i <= 20; i++)
-            avl.add(util.Utility.random(99));
+            avl.add(util.Utility.random(50));
         BTreeNode root = avl.getRoot();
         drawTree(pane, root, x, y, hgap, "root");
         checkBalance(); // Se verifica si el árbol está balanceado o no para cambiar el texto 'balanced' acordemente.
@@ -260,7 +260,7 @@ public class BST_AVL_OperationsController {
         pane.getChildren().clear();
         bst.clear();
         for (int i = 0; i <= 20; i++)
-            bst.add(util.Utility.random(99));
+            bst.add(util.Utility.random(50));
         BTreeNode root = bst.getRoot();
         drawTree(pane, root, x, y, hgap, "root");
         checkBalance();  // Se verifica si el árbol está balanceado o no para cambiar el texto 'balanced' acordemente.
