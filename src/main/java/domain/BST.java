@@ -244,7 +244,7 @@ public class BST implements  Tree {
         printAllHeights(node.left);
         // nodo actual
         int h = height(node.data);
-        System.out.printf("Elemento %-10s → altura = %d%n", node.data, h);
+        System.out.printf("El elemento "+node.data+" tiene una altura de: "+ h);
         // derecho
         printAllHeights(node.right);
     }
