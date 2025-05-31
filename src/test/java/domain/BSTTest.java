@@ -3,176 +3,94 @@ package domain;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 class BSTTest {
 
     @Test
     void test() throws TreeException {
+        System.out.println(" Prueba a) Creación e inserción de árboles ");
         BST bst = new BST();
-
-        //Arbol binario simple que contendrá 100 numeros aleatorios entre 200 y 500
+        
         BTree bTree1 = new BTree();
-        int[] array = new int[100];
-
-        for (int i = 0; i < 100; i++){
-
-            int values = util.Utility.random(300)+200;
-            bTree1.add(values);
-            array[i] = values;
+        for (int i = 0; i < 100; i++) {
+            int val = util.Utility.random(300) + 200;
+            bTree1.add(val);
         }
-
-        //Arbol binario de búsqueda que contendrá las letras del abecedario
+        
         BST bst2 = new BST();
-        ArrayList<Character> array2 = new ArrayList<>();
-
-        for (char alphabethLetters = 'A'; alphabethLetters <= 'Z'; alphabethLetters++){
-            bst2.add(alphabethLetters);
-            array2.add(alphabethLetters);
-
+        for (char c = 'A'; c <= 'Z'; c++) {
+            bst2.add(c);
         }
-
-        //Arbol binario simple que contendrá el nombre de 10 personas
+        
         BTree bTree2 = new BTree();
-        String []personNames = {"Michael", "Katherine", "José David", "Gilbert", "Daniela", "Susana", "Alejandro", "Fiorella", "Fabian", "Pablo"};
-
-        ArrayList<String> array3 = new ArrayList<>();
-
-        for (int names = 0; names < 10; names++){
-            bTree2.add(personNames[names]);
-            array3.add(personNames[names]);
+        String[] personNames = {"Evans", "Alejandro", "Varela", "Alex", "Jose Pablo", "Ilda", "Rebeca", "Oscar", "Getsel", "Yendrick"};
+        for (String name : personNames) {
+            bTree2.add(name);
         }
+        
         bst.add(bTree1);
         bst.add(bst2);
         bst.add(bTree2);
-        //Prueba toString
+        
+        System.out.println("\n Prueba b) Recorridos con toString() ");
         System.out.println(bst);
-
-        //Prueba del método size, min y max
-        try {
-            System.out.println(bst.size());
-            System.out.println(bst.min());
-            System.out.println(bst.max());
-        } catch (TreeException e) {
-            throw new RuntimeException(e);
+        
+        System.out.println("\n Prueba c) size, min, max ");
+        System.out.println("Size: " + bst.size());
+        System.out.println("Min: " + bst.min());
+        System.out.println("Max: " + bst.max());
+        
+        System.out.println("\n Prueba d) contains en subárboles ");
+       
+        int[] nums = {205, 310, 492, 400, 286};
+        for (int num : nums) {
+            System.out.println("¿El arbol binario contiene "+num+" ? = "+bTree1.contains(num) );
         }
-        //Prueba del método contains
-
-        //Prueba del metodo contains con el arbol de los numeros del 1 al 100
-        System.out.println("\nPrueba del metodo contains con el arbol de los numeros del 1 al 100 \n");
-
-        if (!bst.contains(bTree1)) {
-
-            if (bTree1.contains(8)) System.out.println("El árbol binario contiene el número 8");
-            else System.out.println("El numero 8 no se encuenta en el arbol");
-
-            if (bTree1.contains(14)) System.out.println("El árbol binario contiene el número 14");
-            else System.out.println("El numero 14 no se encuenta en el arbol");
-
-            if (bTree1.contains(50)) System.out.println("El árbol binario contiene el número 50");
-            else System.out.println("El numero 50 no se encuenta en el arbol");
-
-            if (bTree1.contains(88)) System.out.println("El árbol binario contiene el número 88");
-            else System.out.println("El numero 88 no se encuenta en el arbol");
-
-            if (bTree1.contains(72)) System.out.println("El árbol binario contiene el número 72");
-            else System.out.println("El numero 72 no se encuenta en el arbol");
-
+        
+        char[] letters = {'F', 'M', 'Z', 'Q', 'G'};
+        for (char ch : letters) {
+            System.out.println("¿El arbol binario de busqueda contiene "+ch+" ? = " + bst2.contains(ch));
         }
-
-        //Prueba del metodo contains con el arbol que contiene las letras
-
-        System.out.println("\nPrueba del metodo contains con el arbol que contiene las letras\n");
-        if (!bst.contains(bst2)) {
-
-            if (bst2.contains('E')) System.out.println("El árbol binario contiene la letra E");
-            else System.out.println("La letra E no se encuenta en el arbol");
-
-            if (bst2.contains('S')) System.out.println("El árbol binario contiene la letra S");
-            else System.out.println("La letra S no se encuenta en el arbol");
-
-            if (bst2.contains('D')) System.out.println("El árbol binario contiene la letra D");
-            else System.out.println("La letra D no se encuenta en el arbol");
-
-            if (bst2.contains('T')) System.out.println("El árbol binario contiene la letra T");
-            else System.out.println("La letra T no se encuenta en el arbol");
-
-            if (bst2.contains('W')) System.out.println("El árbol binario contiene la letra W");
-            else System.out.println("la letra W no se encuenta en el arbol");
-
+       
+        String[] checkNames = {"Evans", "Alejandro", "Varela", "Susana", "Fabian"};
+        for (String nm : checkNames) {
+            System.out.println("¿El arbol binario contiene "+nm+" ? = "+bTree2.contains(nm));
         }
-
-        System.out.println("\nPrueba del metodo contains con el arbol que los nombres\n");
-
-        if (!bst.contains(bTree2)) {
-
-            if (bTree2.contains("Alejandro")) System.out.println("El árbol binario contiene el nombre Alejandro");
-            else System.out.println("El nombre Alejandro no se encuenta en el arbol");
-
-            if (bTree2.contains("Susana")) System.out.println("El árbol binario contiene el nombre Susana");
-            else System.out.println("El nombre Susana no se encuenta en el arbol");
-
-            if (bTree2.contains("José David")) System.out.println("El árbol binario contiene el nombre Jose David");
-            else System.out.println("El nombre Jose David no se encuenta en el arbol");
-
-            if (bTree2.contains("Fiorella")) System.out.println("El árbol binario contiene el nombre Fiorella");
-            else System.out.println("El nombre Fiorella no se encuenta en el arbol");
-
-            if (bTree2.contains("Gilbert")) System.out.println("El árbol binario contiene el nombre Gilbert");
-            else System.out.println("El nombre Gilbert no se encuenta en el arbol");
-
-        }
-        //Prueba de agregar 10 numeros nuevos al arbol BST
-        ArrayList<Integer> arrayList = new ArrayList<>();
-
-        while (arrayList.size() < 10) {
-
-            int value = util.Utility.random(40)+10;
-
-            // Verifica si el número ya está en el array
-            boolean isDuplicate = false;
-            for (int num : arrayList) {
-                if (util.Utility.compare(num, value) == 0) {
-                    isDuplicate = true;
-                    break;
-                }
-            }
-
-            // Si no es duplicado, lo agrega al array
-            if (!isDuplicate) {
-                arrayList.add(value);
+        
+        System.out.println("\n Prueba e) Insertar 10 números aleatorios [10,50] ");
+        List<Integer> added = new ArrayList<>();
+        while (added.size() < 10) {
+            int v = util.Utility.random(40) + 10;
+            if (!added.contains(v)) {
+                added.add(v);
+                bst.add(v);
+                System.out.println("Agregado: " + v);
             }
         }
-
-        // Agrega los elementos únicos al árbol AVL
-        for (int value : arrayList) {
-            bst.add(value);
-        }
-
-        //Prueba si el arbol esta balanceado
-        bst.isBalanced();
-        if (bst.isBalanced()) System.out.println("El arbol esta balanceado \n");
-        else System.out.println("El arbol no esta balanceado \n");
-
-       //Prueba de comprobacion del metodo remove
-
+        
+        System.out.println("\n Prueba f) isBalanced antes de eliminar ");
+        System.out.println("Is balanced: " + bst.isBalanced());
+        
+        System.out.println("\n Prueba g) Eliminar 5 elementos (4 números + bTree1) ");
         for (int i = 0; i < 4; i++) {
-
-            int value = util.Utility.random(40)+10;
-
-            if (bst.contains(value)) {
-                bst.remove(value);
-                System.out.println("El objeto " + value + " ha sido eliminado");
-            } else System.out.println("El elemento " + value + " no se encuenta en el arbol");
-
+            int value;
+            do {
+                value = util.Utility.random(40) + 10;
+            } while (!bst.contains(value));
+            bst.remove(value);
+            System.out.println("El objeto " + value + " ha sido eliminado");
         }
-        bst.remove(bTree1); //remove de un arbol del arbol
-        System.out.println(bst); //toString
-        //Segunda prueba si el arbol esta balanceado
-        bst.isBalanced();
-        if (bst.isBalanced()) System.out.println("El arbol esta balanceado \n");
-        else System.out.println("El arbol no esta balanceado \n");
+        bst.remove(bTree1);
+        System.out.println("Eliminado subárbol bTree1");
+        
+        System.out.println("\n Prueba h) toString tras eliminaciones ");
+        System.out.println(bst);
+        
+        System.out.println("\n Prueba i) isBalanced después de eliminar ");
+        System.out.println("Is balanced: " + bst.isBalanced());
+        
+        System.out.println("\n Prueba j) Altura de cada elemento ");
+        bst.printAllHeights();
     }
-
-
-
 }

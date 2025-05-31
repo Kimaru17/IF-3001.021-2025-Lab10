@@ -211,7 +211,7 @@ public class BTree implements  Tree {
         String result="";
         if(node!=null){
             //result = node.data+" ";
-            result  = node.data+"("+node.path+")"+" ";
+            result  = node.data+" ";
             result += preOrder(node.left);
             result += preOrder(node.right);
         }

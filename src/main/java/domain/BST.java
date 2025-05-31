@@ -234,6 +234,21 @@ public class BST implements  Tree {
                 && isBalanced(node.right);
     }
 
+    public void printAllHeights() throws TreeException {
+        printAllHeights(root);
+    }
+
+    private void printAllHeights(BTreeNode node) throws TreeException {
+        if (node == null) return;
+        // izquierdo
+        printAllHeights(node.left);
+        // nodo actual
+        int h = height(node.data);
+        System.out.printf("Elemento %-10s → altura = %d%n", node.data, h);
+        // derecho
+        printAllHeights(node.right);
+    }
+
     @Override
     public String toString() {
         String result="Binary Search Tree Content:";
